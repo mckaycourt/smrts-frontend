@@ -19,13 +19,14 @@ class App extends Component {
       data.append('file', this.uploadInput.files[0]);
       data.append('filename', this.fileName.value);
   
-      fetch('http://localhost:3001/upload', {
+      fetch('http://localhost:3000/upload', {
         method: 'POST',
         body: data,
       }).then((response) => {
-        response.json().then((body) => {
-          this.setState({ imageURL: `http://localhost:3001/${body.file}` });
-        });
+        console.log(response);
+        // response.json().then((body) => {
+        //   this.setState({ imageURL: `http://localhost:3001/${body.file}` });
+        // });
       });
     }
   
