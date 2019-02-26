@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import socketIOClient from "socket.io-client";
+import Slider from "bootstrap-slider";
 
 class App extends Component {
     constructor() {
@@ -14,6 +15,12 @@ class App extends Component {
     componentDidMount() {
         const {endpoint} = this.state;
         const socket = socketIOClient(endpoint);
+
+        var slider = new Slider("#ex6");
+        // Without JQuery
+        slider.on("slide", function(sliderValue) {
+            document.getElementById("ex6SliderVal").textContent = sliderValue;
+        });
 
         socket.on("tweet", data => {
             this.setState({
@@ -60,19 +67,25 @@ class App extends Component {
         const {response} = this.state;
         return (
             <div style={{textAlign: "center"}}>
-                <button onClick={this.joinRoom}>Join Room</button>
-                <button onClick={this.addTweet}>Add Tweet</button>
-                {
-                    response
-                        ?
-                        <div>
-                            {
-                                this.state.data.map((tweet, i) => (
-                                    <p key={i}>{tweet}</p>
-                                ))
-                            }
-                        </div>
-                        : <p>Loading...</p>}
+                <div>
+                    <button onClick={this.joinRoom}>Join Room</button>
+                    <button onClick={this.addTweet}>Add Tweet</button>
+                    {
+                        response
+                            ?
+                            <div>
+                                {
+                                    this.state.data.map((tweet, i) => (
+                                        <p key={i}>{tweet}</p>
+                                    ))
+                                }
+                            </div>
+                            : <p>Loading...</p>}
+                </div>
+                <div>
+                    <input id="ex6" type="text" data-slider-min="-5" data-slider-max="20" data-slider-step="1" data-slider-value="3"/>
+                    <span id="ex6CurrentSliderValLabel">Current Slider Value: <span id="ex6SliderVal">3</span></span>
+                </div>
             </div>
         );
     }
