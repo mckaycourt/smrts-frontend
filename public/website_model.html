@@ -52,15 +52,50 @@
     <!-- floating action btn-->
     <div class="fixed-action-btn">
         <a class="btn-floating btn-large red">
-            <i class="large material-icons">add</i>
+            <i class="waves-effect waves-light large material-icons modal-trigger" href="#modal1">add</i>
         </a>
         <ul>
-            <li><a class="btn-floating dark-red tooltipped" data-position="top" data-tooltip="Join an event"><i class="material-icons">event</i></a></li>
+            <li><a class="waves-effect waves-light btn-floating blue modal-trigger tooltipped" data-position="top" data-tooltip="Join an event" href="#modal2"><i class="material-icons">event</i></a></li>
         </ul>
     </div>
 
-
-
+    <!-- upload modal -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h4>Upload Simulation</h4>
+            <p>This is some text</p>
+            <img class="materialboxed" width="75%" src="https://www.lifewire.com/thmb/CUJtXORl0pk5cO223nUGmCFdrSY=/768x0/filters:no_upscale():max_bytes(150000):strip_icc()/Excel-5ab27cff04d1cf0036ec54af.png">
+            <form action="#">
+                <div class="progress">
+                    <div class="indeterminate"></div>
+                </div>
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>File</span>
+                        <input type="file">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn waves-effect waves-light right" type="submit" name="action">Submit
+                <i class="material-icons right">send</i>
+            </button>
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat left">Exit</a>
+        </div>
+    </div>
+    <div id="modal2" class="modal bottom-sheet">
+        <div class="modal-content">
+            <h4>Join an event</h4>
+            <p>A bunch of text</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Exit</a>
+        </div>
+    </div>
 
     <footer class="page-footer orange">
         <div class="footer-copyright">
