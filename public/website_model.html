@@ -13,7 +13,7 @@
 
 <body>
     <!-- top nav -->
-    <nav class="blue lighten-1" role="navigation">
+    <nav class="blue darken-1" role="navigation">
         <div class="nav-wrapper  center-align">
             <a id="logo-container" href="#" class="" style="font-size: 1.6rem;">Social Media Simulator</a>
             <a href="#" data-target="slide-out" class="sidenav-trigger left" style="display: block"><i class="material-icons">menu</i></a>
@@ -41,6 +41,7 @@
         <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
     </ul>
 
+
     <div class="section no-pad-bot" id="index-banner">
         <div class="container">
 
@@ -51,7 +52,7 @@
 
     <!-- floating action btn-->
     <div class="fixed-action-btn">
-        <a class="btn-floating btn-large red">
+        <a class="btn-floating btn-large pink">
             <i class="waves-effect waves-light large material-icons modal-trigger" href="#modal1">add</i>
         </a>
         <ul>
@@ -61,16 +62,17 @@
 
     <!-- upload modal -->
     <div id="modal1" class="modal">
+        <a href="#!" class="modal-close waves-effect waves-white pink lighten-0 btn-floating right" style="margin:25px"><i class="material-icons white-text">close</i></a>
         <div class="modal-content">
             <h4>Upload Simulation</h4>
             <p>This is some text</p>
             <img class="materialboxed" width="75%" src="https://www.lifewire.com/thmb/CUJtXORl0pk5cO223nUGmCFdrSY=/768x0/filters:no_upscale():max_bytes(150000):strip_icc()/Excel-5ab27cff04d1cf0036ec54af.png">
             <form action="#">
-                <div class="progress">
-                    <div class="indeterminate"></div>
+                <div class="blue darken-2 progress">
+                    <div class="blue lighten-4 indeterminate"></div>
                 </div>
                 <div class="file-field input-field">
-                    <div class="btn">
+                    <div class="blue darken-2 btn">
                         <span>File</span>
                         <input type="file">
                     </div>
@@ -81,10 +83,9 @@
             </form>
         </div>
         <div class="modal-footer">
-            <button class="btn waves-effect waves-light right" type="submit" name="action">Submit
+            <button class="btn waves-effect waves-light blue darken-2 right" type="submit" name="action" style="margin: 10px 30px">Submit
                 <i class="material-icons right">send</i>
             </button>
-            <a href="#!" class="modal-close waves-effect waves-green btn-flat left">Exit</a>
         </div>
     </div>
     <div id="modal2" class="modal bottom-sheet">
@@ -97,10 +98,10 @@
         </div>
     </div>
 
-    <footer class="page-footer orange">
+    <footer class="page-footer blue darken-1">
         <div class="footer-copyright">
             <div class="container">
-                Made by <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+                Made by <a class="white-text " href="#">The Department of Information Technology</a> at Brigham Young University
             </div>
         </div>
     </footer>
@@ -114,3 +115,15 @@
 </body>
 
 </html>
+
+
+
+
+<style>
+.modal { 
+    width: 75% !important; 
+    height: 105% !important ; 
+    }  /* increase the height and width as you desire */
+
+
+</style>
