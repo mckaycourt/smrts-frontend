@@ -57,11 +57,22 @@ const columnsConfig = [
     sortable: true,
   },
   {
+    name: 'User',
+    selector: 'date',
+    sortable: true,
+    right: false,
+  },
+  {
     name: 'Date Uploaded',
     selector: 'date',
     sortable: true,
-    right: true,
+    right: false,
   },
+  {
+    name: 'Views',
+    selector: 'views',
+    sortable: true,
+  }
 ];
 
 class SimListApp extends Component {
