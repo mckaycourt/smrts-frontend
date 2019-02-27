@@ -4,5 +4,8 @@
     $('.sidenav').sidenav();
     $('.modal').modal();
     $('.materialboxed').materialbox();
+    $('.collapsible').collapsible();
+      
+        M.AutoInit();
 
   });
