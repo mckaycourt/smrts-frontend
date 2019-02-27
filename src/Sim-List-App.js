@@ -45,6 +45,7 @@ function rowClick(properties){
 }
 
 //table properties
+var spacing = 10;
 const columnsConfig = [
   {
     name: 'Simulation',
@@ -55,6 +56,7 @@ const columnsConfig = [
     name: 'Type',
     selector: 'type',
     sortable: true,
+    cell: row => <div>{row.type}</div>
   },
   {
     name: 'User',
@@ -66,12 +68,13 @@ const columnsConfig = [
     name: 'Date Uploaded',
     selector: 'date',
     sortable: true,
-    right: false,
+    right: true,
   },
   {
     name: 'Views',
     selector: 'views',
     sortable: true,
+    right: true
   }
 ];
 
