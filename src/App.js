@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import socketIOClient from "socket.io-client";
-
+import Tweet from './components/Tweet';
+import SimListApp from './Sim-List-App';
 class App extends Component {
     constructor() {
         super();
@@ -44,7 +45,7 @@ class App extends Component {
 
     joinRoom = () => {
         const {socket} = this.state;
-        socket.emit('join room', 'room1');
+        socket.emit('join room', 'default room');
     };
 
     addTweet = () => {
@@ -53,13 +54,13 @@ class App extends Component {
         this.setState({
             data: prevData,
         })
-        // this.state.data.push('testing');
     };
 
     render() {
         const {response} = this.state;
         return (
             <div style={{textAlign: "center"}}>
+                <SimListApp/>
                 <button onClick={this.joinRoom}>Join Room</button>
                 <button onClick={this.addTweet}>Add Tweet</button>
                 {
@@ -68,11 +69,18 @@ class App extends Component {
                         <div>
                             {
                                 this.state.data.map((tweet, i) => (
-                                    <p key={i}>{tweet}</p>
+                                    tweet[0] && tweet[0].user
+                                        ?
+                                        <Tweet username={tweet[0].user.name}
+                                               body={tweet[0].text}
+                                               retweet={tweet[0].retweet_count}
+                                               createdAt={tweet[0].created_at}
+                                               key={i}/>
+                                        : <p key={i}>something went wrong. Received: {tweet}</p>
                                 ))
                             }
                         </div>
-                        : <p>Loading...</p>}
+                        : <p>Join a Room!</p>}
             </div>
         );
     }

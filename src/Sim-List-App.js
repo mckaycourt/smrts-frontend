@@ -1,21 +1,21 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import openSocket from 'socket.io-client';
 import DataTable from 'react-data-table-component';
-import './Sim-List-App.css';
 
 
 const socket = openSocket('http://localhost:3000');
 
 function getSimList(list) {
     socket.on('get list of sims', function (data) {
-        setTimeout(() => { 
+        console.log('getting list of sims');
+        setTimeout(() => {
             list(conformDates(data))
-        },1500)
+        }, 1500)
     });
-    
-    function conformDates(allData){
+
+    function conformDates(allData) {
         var returnArray = [];
-        allData.forEach(function(element) {
+        allData.forEach(function (element) {
             element.date = new Date(element.date).toDateString();
             returnArray.push(element)
         })
@@ -23,7 +23,7 @@ function getSimList(list) {
     }
 }
 
-function returnLoader(){
+function returnLoader() {
     var loaderHTML = `    
     <div class="preloader-wrapper big active">
       <div class="spinner-layer spinner-blue">
@@ -40,43 +40,48 @@ function returnLoader(){
     return {__html: loaderHTML}
 }
 
-function rowClick(properties){
+function rowClick(properties) {
     console.log(properties);
 }
 
 //table properties
 var spacing = 10;
 const columnsConfig = [
-  {
-    name: 'Simulation',
-    selector: 'nameOfSim',
-    sortable: true,
-  },  
-  {
-    name: 'Type',
-    selector: 'type',
-    sortable: true,
-    cell: row => <div>{row.type}</div>
-  },
-  {
-    name: 'User',
-    selector: 'date',
-    sortable: true,
-    right: false,
-  },
-  {
-    name: 'Date Uploaded',
-    selector: 'date',
-    sortable: true,
-    right: true,
-  },
-  {
-    name: 'Views',
-    selector: 'views',
-    sortable: true,
-    right: true
-  }
+    {
+        name: 'Simulation',
+        selector: 'nameOfSim',
+        sortable: true,
+    },
+    {
+        name: 'Type',
+        selector: 'type',
+        sortable: true,
+        cell: row => <div>{row.type}</div>
+    },
+    {
+        name: 'User',
+        selector: 'date',
+        sortable: true,
+        right: false,
+    },
+    {
+        name: 'Date Uploaded',
+        selector: 'date',
+        sortable: true,
+        right: true,
+    },
+    {
+        name: 'Views',
+        selector: 'views',
+        sortable: true,
+        right: true
+    }
 ];
+
+const selectStyle = {
+    display: 'inline',
+    border: '1px solid #ada9a9!important',
+};
 
 class SimListApp extends Component {
     constructor(props) {
@@ -84,56 +89,58 @@ class SimListApp extends Component {
 
         this.state = {
             simExist: false,
-            data:null
+            data: null
         }
     }
-    
+
     componentDidMount() {
-        getSimList((incomingData)=>{
+        getSimList((incomingData) => {
             console.log(incomingData);
-            this.setState({ 
+            this.setState({
                 simExist: true,
-                data:incomingData
+                data: incomingData
             })
         });
     }
 
-      render() {
+    getSims =() => {
+        socket.emit('get list of sims');
+    };
+
+    render() {
         const receivedSimulation = this.state.simExist;
         const simulationData = this.state.data;
 
         return (
-          <div className="SimList">
+            <div className="SimList">
 
-            {receivedSimulation ? (
-                <DataTable
-                    pagination
-                    paginationRowsPerPageOptions={[10,25,50]}
-                    columns={columnsConfig}
-                    data={simulationData}
-                    selectableRows
-                    highlightOnHover
-                    defaultSortField="year"
-                    responsive={true}
-                    striped={true}
-                    pointerOnHover={true}
-                    className={'container'}
-                    onRowClicked={rowClick}
-                />
-            ) : (
-                <div dangerouslySetInnerHTML={returnLoader()} />
-            )}
+                {receivedSimulation ? (
+                    <DataTable
+                        pagination
+                        paginationRowsPerPageOptions={[10, 25, 50]}
+                        columns={columnsConfig}
+                        data={simulationData}
+                        selectableRows
+                        highlightOnHover
+                        defaultSortField="year"
+                        responsive={true}
+                        striped={true}
+                        pointerOnHover={true}
+                        className={'container'}
+                        onRowClicked={rowClick}
+                    />
+                ) : (
+                    <div dangerouslySetInnerHTML={returnLoader()}/>
+                )}
 
-
-
-          </div>
+                <button onClick={this.getSims}>Get Sims</button>
+            </div>
         )
-      }
+    }
 }
 
 
 export default SimListApp
-
 
 
 /*
