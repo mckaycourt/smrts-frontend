@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import openSocket from 'socket.io-client';
 import DataTable from 'react-data-table-component';
+import 'materialize-css';
+import 'materialize-css/dist/css/materialize.min.css';
 import '../CSS/Sim-List-App.css';
 
 const socket = openSocket('http://localhost:3000');
@@ -10,7 +12,7 @@ function getSimList(list) {
         console.log('getting list of sims');
         setTimeout(() => {
             list(conformDates(data))
-        }, 1500)
+        }, 1000)
     });
 
     function conformDates(allData) {
@@ -25,16 +27,17 @@ function getSimList(list) {
 
 function returnLoader() {
     var loaderHTML = `    
-    <div class="preloader-wrapper big active">
-      <div class="spinner-layer spinner-blue">
-        <div class="circle-clipper left">
-          <div class="circle"></div>
-        </div><div class="gap-patch">
-          <div class="circle"></div>
-        </div><div class="circle-clipper right">
-          <div class="circle"></div>
-        </div>
-      </div>`;
+  <div class="preloader-wrapper big active">
+    <div class="spinner-layer spinner-blue-only">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div><div class="gap-patch">
+        <div class="circle"></div>
+      </div><div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+  </div>`;
 
 
     return {__html: loaderHTML}
