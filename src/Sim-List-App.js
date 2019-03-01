@@ -111,7 +111,6 @@ class SimListApp extends Component {
                     paginationRowsPerPageOptions={[10,25,50]}
                     columns={columnsConfig}
                     data={simulationData}
-                    selectableRows
                     highlightOnHover
                     defaultSortField="year"
                     responsive={true}
