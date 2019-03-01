@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import openSocket from 'socket.io-client';
 import DataTable from 'react-data-table-component';
-
+import '../CSS/Sim-List-App.css';
 
 const socket = openSocket('http://localhost:3000');
 
@@ -18,7 +18,7 @@ function getSimList(list) {
         allData.forEach(function (element) {
             element.date = new Date(element.date).toDateString();
             returnArray.push(element)
-        })
+        });
         return returnArray
     }
 }
@@ -78,11 +78,6 @@ const columnsConfig = [
     }
 ];
 
-const selectStyle = {
-    display: 'inline',
-    border: '1px solid #ada9a9!important',
-};
-
 class SimListApp extends Component {
     constructor(props) {
         super(props);
@@ -103,7 +98,7 @@ class SimListApp extends Component {
         });
     }
 
-    getSims =() => {
+    getSims = () => {
         socket.emit('get list of sims');
     };
 
@@ -132,8 +127,6 @@ class SimListApp extends Component {
                 ) : (
                     <div dangerouslySetInnerHTML={returnLoader()}/>
                 )}
-
-                <button onClick={this.getSims}>Get Sims</button>
             </div>
         )
     }
