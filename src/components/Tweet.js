@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 const styles = {
     border: 'solid black 1px',
+    margin: '10px',
 };
 
 const Tweet = props => (
