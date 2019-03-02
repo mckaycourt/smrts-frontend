@@ -2,14 +2,17 @@ import React, {
     Component
 } from 'react';
 import openSocket from 'socket.io-client';
+import DataTable from 'react-data-table-component';
 import M from 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css';
 import WebFont from 'webfontloader';
 import '../CSS/UploadModal.css'; 
+var SocketIOFileUpload = require('socketio-file-upload');
 
 const socket = openSocket('http://localhost:3000');
+var uploader = new SocketIOFileUpload(socket);
 
-class UploadButton extends Component {
+class FloatingModalButton extends Component {
   render() {
    return (
         <div className="fixed-action-btn">
@@ -27,14 +30,144 @@ class UploadButton extends Component {
 class Modal1 extends Component {
     constructor() {
         super();
+        const columns = [
+            {
+                name: 'Header',
+                selector: 'header',
+                sortable: true,
+            },
+            {
+                name: 'Required',
+                cell: row => <div>{row.required.toString()}</div>,
+                sortable: true,
+            },
+            {
+                name: 'Description',
+                selector: 'desc',
+            }
+        ];
+        const infoTableTheming = {
+          rows: {
+            height: '34px'
+          }
+        }
         this.state = {
-            percent: 0,
-            showUploader: false
+            percent: 1,
+            showUploader: false,
+            columns:columns,
+            infoTableTheming: infoTableTheming
         };
     }
 
-    /*put in the functionality for the table*/
+    componentDidMount() {
+        var table = [
+            {
+                header: 'created_at',
+                required: 'true',
+                desc: 'this is a description'
+            },
+            {
+                header: 'id_str',
+                required: true,
+                desc: 'this is a description'
+            },
+            {
+                header: 'retweet_count',
+                required: true,
+                desc: 'this is a description'
+            },
+            {
+                header: 'favorite_count',
+                required: true,
+                desc: 'this is a description'
+            },
+            {
+                header: 'favorited',
+                required: true,
+                desc: 'this is a description'
+            },
+            {
+                header: 'description',
+                required: true,
+                desc: 'this is a description'
+            },
+            {
+                header: 'followers_count',
+                required: true,
+                desc: 'this is a description'
+            },
+            {
+                header: 'following',
+                required: true,
+                desc: 'this is a description'
+            },
+            {
+                header: 'statuses_count',
+                required: true,
+                desc: 'this is a description'
+            },
+            {
+                header: 'name',
+                required: true,
+                desc: 'this is a description'
+            },
+            {
+                header: 'screen_name',
+                required: true,
+                desc: 'this is a description'
+            },
+            {
+                header: 'media_url',
+                required: true,
+                desc: 'this is a description'
+            },
+            {
+                header: 'typeof',
+                required: true,
+                desc: 'this is a description'
+            },
+            {
+                header: 'verified',
+                required: true,
+                desc: 'this is a description'
+            },
+            {
+                header: 'coordinates',
+                required: true,
+                desc: 'this is a description'
+            },
+            {
+                header: 'reply',
+                required: true,
+                desc: 'this is a description'
+            }]
+        this.setState({infoTable: table})
+        M.AutoInit();
+
+        uploader.listenOnSubmit(document.getElementById("my_button"), document.getElementById("siofu_input"));
+        uploader.addEventListener("start", function (event) {
+            event.file.meta.hello = "world";
+        });
+        uploader.addEventListener("progress", function (event) {
+            var percent = event.bytesLoaded / event.file.size * 100;
+            console.log("File is", percent.toFixed(2), "percent loaded");
+        });
+        uploader.addEventListener("complete", function (event) {
+
+        });
+
+        socket.on('upload status', function (data) {
+            console.log(data)
+        });
+    }
+
     
+    
+    handleSubmitClick = () => {
+        this.setState({showUploader: true})
+
+    }
+
     render() {
        return (
            <div id="modal1" className="modal large">
@@ -46,28 +179,33 @@ class Modal1 extends Component {
                          <img src="./img/modal-example.PNG" alt="csv example" className="materialboxed responsive-img" />
                     </div>
                     <div className="section">
-                        <h5>Accepted Fields</h5>
-                        <div></div>
+                        <DataTable
+                            title="Accepted Fields"
+                            columns={this.state.columns}
+                            data={this.state.infoTable}
+                            overflowY={true}
+                            responsive={true}
+                            customTheme={this.state.infoTableTheming}
+                        />
+                    
+                    
                     </div>
-                    <form action="#">
-                        <div className="blue darken-2 progress">
-                            <div className="blue lighten-4 indeterminate"></div>
-                        </div>
+                        <UploaderProgressBar percent={this.state.percent} show={this.state.showUploader} />
                         <div className="file-field input-field">
-                            <div className="blue darken-2 btn">
+                            <div className="btn">
                                 <span>File</span>
-                                <input type="file" />
+                                <input type="file" id="siofu_input" />
                             </div>
                             <div className="file-path-wrapper">
                                 <input className="file-path validate" type="text" />
                             </div>
                         </div>
-                    </form>
+                        <button className="btn waves-effect waves-light right" id="my_button" onClick={this.handleSubmitClick}>Submit
+                            <i className="material-icons right">send</i>
+                        </button>
                </div>
               <div className="modal-footer">
-                <button className="btn waves-effect waves-light blue darken-2 right" type="submit" name="action">Submit
-                    <i className="material-icons right">send</i>
-                </button>
+
               </div>
            </div>
         );
@@ -93,79 +231,53 @@ class UploadModal extends Component {
     render() {
         return (            
             <div>
-                <UploadButton />
+                <FloatingModalButton />
                 <Modal1 />
             </div>
         )
     }
 }
 
+function UploaderProgressBar(props) {
+  if (!props.show) {
+    return null;
+  }
+
+  return (
+    <div className="blue lighten-4 progress">
+        <div className="blue darken-2 determinate" style={{"width" : props.percent+"%"}}></div>
+    </div>
+  );
+}
 
 export default UploadModal;
 
 
-/*
-var uploader = new SocketIOFileUpload(socket);
-uploader.listenOnSubmit(document.getElementById("my_button"), document.getElementById("siofu_input"));
-uploader.addEventListener("start", function (event) {
-    event.file.meta.hello = "world";
-    $('.progress').show();
-});
-uploader.addEventListener("progress", function (event) {
-    var percent = event.bytesLoaded / event.file.size * 100;
-    $('.determinate').css({
-        "width": percent + "%"
-    });
-    console.log("File is", percent.toFixed(2), "percent loaded");
-});
-uploader.addEventListener("complete", function (event) {
-    $('.progress').fadeOut('slow');
-});
 
-socket.on('connect', function () {
 
-    socket.on('upload status', function (data) {
-        console.log(data)
-    });
-}
-*/
+
 
 /*
-<div id="modal1" className="modal large">
-            <a href="#!" className="modal-close waves-effect waves-white pink lighten-0 btn-floating right" style="margin:25px"><i className="material-icons white-text">close</i></a>
-            <div className="modal-content">
-                <h4>Upload Simulation</h4>
-                <div className="section">
-                    <p>Please ensure that you data is in a <strong>.csv format</strong> before uploading. The columns headers must be formatted in the following way with data in every column.</p>
-                    <img className="materialboxed" width="100%" src="./modal-example.PNG">
+            <div class="file-field input-field">
+                <div class="btn">
+                    <span>File</span>
+                    <input type="file" id="siofu_input" />
                 </div>
-                <div className="section">
-                    <h5>Accepted Fields</h5>
-                    <div id="tableAndDefination" style="height: 350px;margin-bottom: 50px;   overflow-y: scroll; width: 100%"></div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
                 </div>
-                <form action="#">
-                    <div className="blue darken-2 progress">
-                        <div className="blue lighten-4 indeterminate"></div>
-                    </div>
-                    <div className="file-field input-field">
-                        <div className="blue darken-2 btn">
-                            <span>File</span>
-                            <input type="file">
-                        </div>
-                        <div className="file-path-wrapper">
-                            <input className="file-path validate" type="text">
-                        </div>
-                    </div>
-                </form>
             </div>
-            <div className="modal-footer">
-                <button className="btn waves-effect waves-light blue darken-2 right" type="submit" name="action" style="margin: 10px 30px">Submit
+            <button class="btn waves-effect waves-light right" id="my_button">Submit
+                <i class="material-icons right">send</i>
+            </button>
+
+
+
+                <button id="my_button" className="btn waves-effect waves-light blue darken-2 right" onClick={this.handleSubmitClick}>Submit
                     <i className="material-icons right">send</i>
                 </button>
-            </div>
-        </div>
-
-
-
 */
+
+
+
 

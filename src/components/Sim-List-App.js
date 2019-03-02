@@ -48,7 +48,6 @@ function rowClick(properties) {
 }
 
 //table properties
-var spacing = 10;
 const columnsConfig = [
     {
         name: 'Simulation',
