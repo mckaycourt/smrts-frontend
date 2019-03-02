@@ -20,7 +20,7 @@ class FloatingModalButton extends Component {
                 <i className="waves-effect waves-light large material-icons modal-trigger" href="#modal1">add</i>
             </a>
             <ul>
-                <li><a className="waves-effect waves-light btn-floating blue modal-trigger tooltipped" data-position="top" data-tooltip="Join an event" href="#modal2"><i className="material-icons">event</i></a></li>
+                <li><a className="waves-effect waves-light btn-floating blue modal-trigger tooltipped" data-position="top" data-tooltip="Join a Room" href="#modal2"><i className="material-icons">event</i></a></li>
             </ul>
         </div>   
     );
