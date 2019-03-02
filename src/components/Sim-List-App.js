@@ -111,7 +111,6 @@ class SimListApp extends Component {
 
         return (
             <div className="SimList">
-
                 {receivedSimulation ? (
                     <DataTable
                         pagination
@@ -138,14 +137,6 @@ class SimListApp extends Component {
 
 export default SimListApp
 
-
-/*
-NEED TO INCLUDE THIS CSS IN THE COMPONENT
-select{
-    display: inline;
-    border: 1px solid #ada9a9!important;
-}
-*/
 
 
 

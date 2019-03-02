@@ -1,4 +1,11 @@
 .modal.large {
     width: 75% !important;
-    height: 105% !important;
+}
+
+#modal1 button {
+    margin: 10px 30px;
+}
+
+#modal1 .modal-close-button {
+    margin: 25px
 }
