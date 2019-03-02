@@ -1,5 +1,6 @@
 .modal.large {
     width: 75% !important;
+    max-width: 1280px!important;
 }
 
 #modal1 button {
