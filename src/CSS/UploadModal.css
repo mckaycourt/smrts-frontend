@@ -9,3 +9,8 @@
 #modal1 .modal-close-button {
     margin: 25px
 }
+
+#modal1 .progress .determinate {
+    -webkit-transition: width 0s linear;
+    transition: width 0s linear;
+}

@@ -144,28 +144,44 @@ class Modal1 extends Component {
         this.setState({infoTable: table})
         M.AutoInit();
 
+        var self=this;
         uploader.listenOnSubmit(document.getElementById("my_button"), document.getElementById("siofu_input"));
         uploader.addEventListener("start", function (event) {
             event.file.meta.hello = "world";
         });
+        
         uploader.addEventListener("progress", function (event) {
             var percent = event.bytesLoaded / event.file.size * 100;
             console.log("File is", percent.toFixed(2), "percent loaded");
+            self.setState({percent: percent})
         });
+        
         uploader.addEventListener("complete", function (event) {
-
+            setTimeout(function(){ 
+                self.setState({percent: 0,showUploader:true}) 
+            }, 600);
         });
-
         socket.on('upload status', function (data) {
+            console.log(data)
+            if(!data.status){
+                data.problem.forEach(function(element) {
+                    if(element.includes('csv')){
+                        M.toast({html: element, classes: 'red darken-1 rounded'});
+                    } else{
+                        M.toast({html: "<strong>"+element+"</strong>' header is missing", classes: 'red darken-1 rounded'});
+                    }
+                });
+
+            } else{
+                M.toast({html: 'Upload Complete!', classes: 'green darken-1 rounded'});
+            }
+
             console.log(data)
         });
     }
 
-    
-    
     handleSubmitClick = () => {
         this.setState({showUploader: true})
-
     }
 
     render() {
@@ -175,6 +191,21 @@ class Modal1 extends Component {
                 <div className="modal-content">
                     <h4>Upload Simulation</h4>
                     <div className="section">
+                        <UploaderProgressBar percent={this.state.percent} show={this.state.showUploader} />
+                        <div className="file-field input-field">
+                            <div className="btn blue darken-1">
+                                <span>File</span>
+                                <input type="file" id="siofu_input" />
+                            </div>
+                            <div className="file-path-wrapper">
+                                <input className="file-path validate" type="text" />
+                            </div>
+                        </div>
+                        <button className="btn waves-effect waves-light right blue darken-1" id="my_button" onClick={this.handleSubmitClick}>Submit
+                            <i className="material-icons right">send</i>
+                        </button>
+                    </div>
+                    <div className="section" style={{paddingTop: 75}}>
                         <p>Please ensure that you data is in a <strong>.csv format</strong> before uploading. The columns headers must be formatted in the following way with data in every column.</p>
                          <img src="./img/modal-example.PNG" alt="csv example" className="materialboxed responsive-img" />
                     </div>
@@ -187,22 +218,7 @@ class Modal1 extends Component {
                             responsive={true}
                             customTheme={this.state.infoTableTheming}
                         />
-                    
-                    
                     </div>
-                        <UploaderProgressBar percent={this.state.percent} show={this.state.showUploader} />
-                        <div className="file-field input-field">
-                            <div className="btn">
-                                <span>File</span>
-                                <input type="file" id="siofu_input" />
-                            </div>
-                            <div className="file-path-wrapper">
-                                <input className="file-path validate" type="text" />
-                            </div>
-                        </div>
-                        <button className="btn waves-effect waves-light right" id="my_button" onClick={this.handleSubmitClick}>Submit
-                            <i className="material-icons right">send</i>
-                        </button>
                </div>
               <div className="modal-footer">
 
@@ -276,6 +292,15 @@ export default UploadModal;
                 <button id="my_button" className="btn waves-effect waves-light blue darken-2 right" onClick={this.handleSubmitClick}>Submit
                     <i className="material-icons right">send</i>
                 </button>
+
+
+}
+
+
+
+
+
+
 */
 
 
