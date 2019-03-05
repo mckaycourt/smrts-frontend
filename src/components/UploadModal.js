@@ -55,10 +55,16 @@ class Modal1 extends Component {
             percent: 1,
             showUploader: false,
             columns:columns,
-            infoTableTheming: infoTableTheming
+            infoTableTheming: infoTableTheming,
+            userName: 'Default User',
+            simName: null,    
+            simType: 'Twitter'
         };
+        this.handleChange = this.handleChange.bind(this);
+
     }
 
+    //uploadHandlers are implmented here
     componentDidMount() {
         var table = [
             {
@@ -142,20 +148,40 @@ class Modal1 extends Component {
                 desc: 'this is a description'
             }]
         this.setState({infoTable: table})
+
+        //materialize init
+        var elems = document.querySelectorAll('select');
+        var instances = M.FormSelect.init(elems);
         M.AutoInit();
 
-        var self=this;
         uploader.listenOnSubmit(document.getElementById("my_button"), document.getElementById("siofu_input"));
+    }
+
+    handleSubmitClick = () => {
+        var self=this;
+        console.log(this.state.simName)
+        console.log(this.state.userName)
+        console.log(this.state.simType);
+
+        if(!this.state.simName){
+            M.toast({html: 'No Simulation Name', classes: 'red darken-1 rounded'});
+            return
+        }
+        if(document.getElementById("siofu_input").files.length == 0){
+            M.toast({html: 'No File Attached', classes: 'red darken-1 rounded'});
+            return
+        }
+        this.setState({showUploader: true});
         uploader.addEventListener("start", function (event) {
-            event.file.meta.hello = "world";
+            event.file.meta.simName = this.state.simName;
+            event.file.meta.userName = this.state.userName;
+            event.file.meta.simType = this.state.simType;
         });
-        
         uploader.addEventListener("progress", function (event) {
             var percent = event.bytesLoaded / event.file.size * 100;
             console.log("File is", percent.toFixed(2), "percent loaded");
             self.setState({percent: percent})
         });
-        
         uploader.addEventListener("complete", function (event) {
             setTimeout(function(){ 
                 self.setState({percent: 0,showUploader:true}) 
@@ -175,14 +201,16 @@ class Modal1 extends Component {
             } else{
                 M.toast({html: 'Upload Complete!', classes: 'green darken-1 rounded'});
             }
-
-            console.log(data)
-        });
+            console.log(data);
+            this.setState({showUploader: false});
+        });  
     }
 
-    handleSubmitClick = () => {
-        this.setState({showUploader: true})
-    }
+      handleChange(event) {
+        this.setState({
+          [event.target.name]: event.target.value
+        });      
+      }
 
     render() {
        return (
@@ -190,25 +218,53 @@ class Modal1 extends Component {
                 <a href="#!" className="modal-close waves-effect waves-white pink lighten-0 btn-floating right modal-close-button"><i className="material-icons white-text">close</i></a>
                 <div className="modal-content">
                     <h4>Upload Simulation</h4>
-                    <div className="section">
+           
+                    <div className="section" style={{paddingBottom: 85}}>
                         <UploaderProgressBar percent={this.state.percent} show={this.state.showUploader} />
-                        <div className="file-field input-field">
-                            <div className="btn blue darken-1">
-                                <span>File</span>
-                                <input type="file" id="siofu_input" />
+                          <div className="row">
+                              <div className="row">
+                                <div className="input-field col s6">
+                                  <input type="text" className="validate" value={this.state.userName} disabled />
+                                  <label>User Name</label>
+                                </div>
+                                <div className="input-field col s6">
+                                    <select defaultValue={this.state.simType} onChange={(val) => {this.setState({simType: val});}}>
+                                      <option value="Twitter">Twitter</option>
+                                    </select>
+                                    <label>Type of Simulation</label>
+                                </div>
+                              </div>
+                              <div className="row">
+                                <div className="input-field col s12">
+                                  <input className="validated" name="simName" type="text" onChange={this.handleChange} />
+                                  <label>Simulation Name</label>
+                                </div>
+                              </div>
+                          </div>
+
+                            <div className="file-field input-field">
+                                <div className="btn blue darken-1">
+                                    <span>File</span>
+                                    <input type="file" id="siofu_input" />
+                                </div>
+                                <div className="file-path-wrapper">
+                                    <input className="file-path validate" type="text" />
+                                </div>
                             </div>
-                            <div className="file-path-wrapper">
-                                <input className="file-path validate" type="text" />
-                            </div>
-                        </div>
-                        <button className="btn waves-effect waves-light right blue darken-1" id="my_button" onClick={this.handleSubmitClick}>Submit
-                            <i className="material-icons right">send</i>
-                        </button>
+                            <button className="btn waves-effect waves-light right blue darken-1" id="my_button" onClick={this.handleSubmitClick}>Submit
+                                <i className="material-icons right">send</i>
+                            </button>
                     </div>
+           
+                    <div className="divider"></div>
+
                     <div className="section" style={{paddingTop: 75}}>
+                        <h4>How to Use Uploader</h4>
                         <p>Please ensure that you data is in a <strong>.csv format</strong> before uploading. The columns headers must be formatted in the following way with data in every column.</p>
                          <img src="./img/modal-example.PNG" alt="csv example" className="materialboxed responsive-img" />
                     </div>
+           
+           
                     <div className="section">
                         <DataTable
                             title="Accepted Fields"
