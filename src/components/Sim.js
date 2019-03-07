@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import socketIOClient from "socket.io-client";
 import Tweets from '../components/Tweets';
 
 
@@ -10,13 +9,11 @@ class Sim extends Component {
             response: false,
             data: [],
             total: 100,
-            endpoint: "http://127.0.0.1:3000",
         }
     }
 
     componentDidMount() {
-        const {endpoint} = this.state;
-        const socket = socketIOClient(endpoint);
+        const socket = this.props.socket;
 
         socket.on("tweet", data => {
             this.setState({

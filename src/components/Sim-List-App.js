@@ -1,14 +1,11 @@
 import React, {Component} from 'react'
-import openSocket from 'socket.io-client';
 import DataTable from 'react-data-table-component';
 import 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css';
 import '../CSS/Sim-List-App.css';
 var moment = require('moment');
 
-const socket = openSocket('http://localhost:3000');
-
-function getSimList(list) {
+function getSimList(list, socket) {
     socket.on('get list of sims', function (data) {
         console.log('getting list of sims');
         setTimeout(() => {
@@ -90,18 +87,19 @@ class SimListApp extends Component {
     }
 
     componentDidMount() {
+        const socket = this.props.socket;
         getSimList((incomingData) => {
             console.log(incomingData);
             this.setState({
                 simExist: true,
                 data: incomingData
             })
-        });
+        }, socket);
     }
 
-    getSims = () => {
-        socket.emit('get list of sims');
-    };
+    // getSims = () => {
+    //     socket.emit('get list of sims');
+    // };
 
     render() {
         const receivedSimulation = this.state.simExist;
@@ -134,8 +132,4 @@ class SimListApp extends Component {
 }
 
 
-export default SimListApp
-
-
-
-
+export default SimListApp;
