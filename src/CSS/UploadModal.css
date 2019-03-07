@@ -1,6 +1,6 @@
 .modal.large {
     width: 75% !important;
-    max-width: 1280px!important;
+    max-width: 1280px !important;
 }
 
 #modal1 button {
@@ -14,4 +14,8 @@
 #modal1 .progress .determinate {
     -webkit-transition: width 0s linear;
     transition: width 0s linear;
+}
+
+#modal2 {
+    min-height: 65%;
 }

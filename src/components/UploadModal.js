@@ -7,8 +7,9 @@ import M from 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css';
 import WebFont from 'webfontloader';
 import '../CSS/UploadModal.css'; 
-var SocketIOFileUpload = require('socketio-file-upload');
 
+//socket stuff
+var SocketIOFileUpload = require('socketio-file-upload');
 const socket = openSocket('http://localhost:3000');
 var uploader = new SocketIOFileUpload(socket);
 
@@ -154,13 +155,15 @@ class Modal1 extends Component {
         var instances = M.FormSelect.init(elems);
         M.AutoInit();
 
-        uploader.listenOnSubmit(document.getElementById("my_button"), document.getElementById("siofu_input"));
+        //uploader.listenOnSubmit(document.getElementById("my_button"), document.getElementById("siofu_input"));
+
+
+
     }
 
     handleSubmitClick = () => {
-        var self=this;
-        console.log(this.state.simName)
-        console.log(this.state.userName)
+        console.log(this.state.simName);
+        console.log(this.state.userName);
         console.log(this.state.simType);
 
         if(!this.state.simName){
@@ -171,11 +174,14 @@ class Modal1 extends Component {
             M.toast({html: 'No File Attached', classes: 'red darken-1 rounded'});
             return
         }
-        this.setState({showUploader: true});
+
+        //declare functions needed to uploaded
+        var self=this;
         uploader.addEventListener("start", function (event) {
-            event.file.meta.simName = this.state.simName;
-            event.file.meta.userName = this.state.userName;
-            event.file.meta.simType = this.state.simType;
+            self.setState({showUploader: true});
+            event.file.meta.simName = self.state.simName;
+            event.file.meta.userName = self.state.userName;
+            event.file.meta.simType = self.state.simType;
         });
         uploader.addEventListener("progress", function (event) {
             var percent = event.bytesLoaded / event.file.size * 100;
@@ -183,8 +189,9 @@ class Modal1 extends Component {
             self.setState({percent: percent})
         });
         uploader.addEventListener("complete", function (event) {
+            console.log(event);
             setTimeout(function(){ 
-                self.setState({percent: 0,showUploader:true}) 
+                self.setState({percent: 0,showUploader:false}) 
             }, 600);
         });
         socket.on('upload status', function (data) {
@@ -199,11 +206,14 @@ class Modal1 extends Component {
                 });
 
             } else{
-                M.toast({html: 'Upload Complete!', classes: 'green darken-1 rounded'});
+                M.Modal.getInstance(document.getElementById("modal1")).close();
+                M.toast({html: 'Saved Successfully!', classes: 'green darken-1 rounded'});
+                socket.emit('get list of sims','gimme gimme');
             }
-            console.log(data);
-            this.setState({showUploader: false});
+            self.setState({showUploader: false});
         });  
+        //start upload
+        uploader.submitFiles(document.getElementById("siofu_input").files);
     }
 
       handleChange(event) {
@@ -261,6 +271,7 @@ class Modal1 extends Component {
                     <div className="section" style={{paddingTop: 75}}>
                         <h4>How to Use Uploader</h4>
                         <p>Please ensure that you data is in a <strong>.csv format</strong> before uploading. The columns headers must be formatted in the following way with data in every column.</p>
+                        <p>Here is a downloadable <a className='' href='./content/smrts-template.csv' download>starter template</a></p>
                          <img src="./img/modal-example.PNG" alt="csv example" className="materialboxed responsive-img" />
                     </div>
            
@@ -284,6 +295,34 @@ class Modal1 extends Component {
     }
 }
 
+class Modal2 extends Component {
+  
+    
+    render() {
+       return (
+          <div id="modal2" className="modal bottom-sheet">
+            <div className="modal-content">
+                <div className="modal-content">
+                    <h3 className="header">Simulations in Progress</h3>
+                    <ul className="collection">
+                     <li className="collection-item avatar">
+                        <i className="material-icons circle">assignment_ind</i>
+                        <span className="title">Simulation Name</span>
+                        <p>Meta Data</p>
+                      </li>
+                      <li className="collection-item avatar">
+                        <i className="material-icons circle">folder</i>
+                        <span className="title">Simulation Name</span>
+                        <p>Meta Data</p>
+                      </li>
+                    </ul>
+                  </div>
+            </div>
+          </div>
+
+       )}
+}
+
 class UploadModal extends Component {
     constructor() {
         super();
@@ -305,6 +344,7 @@ class UploadModal extends Component {
             <div>
                 <FloatingModalButton />
                 <Modal1 />
+                <Modal2 />
             </div>
         )
     }
@@ -323,41 +363,6 @@ function UploaderProgressBar(props) {
 }
 
 export default UploadModal;
-
-
-
-
-
-
-/*
-            <div class="file-field input-field">
-                <div class="btn">
-                    <span>File</span>
-                    <input type="file" id="siofu_input" />
-                </div>
-                <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text">
-                </div>
-            </div>
-            <button class="btn waves-effect waves-light right" id="my_button">Submit
-                <i class="material-icons right">send</i>
-            </button>
-
-
-
-                <button id="my_button" className="btn waves-effect waves-light blue darken-2 right" onClick={this.handleSubmitClick}>Submit
-                    <i className="material-icons right">send</i>
-                </button>
-
-
-}
-
-
-
-
-
-
-*/
 
 
 
