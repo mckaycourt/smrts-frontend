@@ -2,9 +2,10 @@ import React, {Component} from "react";
 import socketIOClient from "socket.io-client";
 import Sim from './components/Sim';
 import SimListApp from './components/Sim-List-App';
+import ActiveSimulations from './components/ActiveSimulations';
+
 import './CSS/Navbar.css';
 import UploadModal from "./components/UploadModal";
-
 
 class App extends Component {
     constructor() {
@@ -18,7 +19,9 @@ class App extends Component {
             <>
                 <SimListApp socket={socket}/>
                 <Sim socket={socket}/>
-                <UploadModal/>
+                <UploadModal socket={socket} />
+                <ActiveSimulations socket={socket}/>
+
             </>
         );
     }

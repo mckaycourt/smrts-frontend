@@ -10,8 +10,6 @@ import '../CSS/UploadModal.css';
 
 //socket stuff
 var SocketIOFileUpload = require('socketio-file-upload');
-const socket = openSocket('http://localhost:3000');
-var uploader = new SocketIOFileUpload(socket);
 
 class FloatingModalButton extends Component {
   render() {
@@ -29,8 +27,8 @@ class FloatingModalButton extends Component {
 }
 
 class Modal1 extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         const columns = [
             {
                 name: 'Header',
@@ -62,11 +60,13 @@ class Modal1 extends Component {
             simType: 'Twitter'
         };
         this.handleChange = this.handleChange.bind(this);
-
     }
 
     //uploadHandlers are implmented here
     componentDidMount() {
+        const socket = this.props.socket;
+        var uploader = new SocketIOFileUpload(socket);
+
         var table = [
             {
                 header: 'created_at',
@@ -155,16 +155,14 @@ class Modal1 extends Component {
         var instances = M.FormSelect.init(elems);
         M.AutoInit();
 
-        //uploader.listenOnSubmit(document.getElementById("my_button"), document.getElementById("siofu_input"));
-
-
-
+        this.setState({
+            socket, uploader 
+        })
     }
 
     handleSubmitClick = () => {
-        console.log(this.state.simName);
-        console.log(this.state.userName);
-        console.log(this.state.simType);
+        const {socket} = this.state;
+        const {uploader} = this.state;
 
         if(!this.state.simName){
             M.toast({html: 'No Simulation Name', classes: 'red darken-1 rounded'});
@@ -177,6 +175,7 @@ class Modal1 extends Component {
 
         //declare functions needed to uploaded
         var self=this;
+
         uploader.addEventListener("start", function (event) {
             self.setState({showUploader: true});
             event.file.meta.simName = self.state.simName;
@@ -189,13 +188,11 @@ class Modal1 extends Component {
             self.setState({percent: percent})
         });
         uploader.addEventListener("complete", function (event) {
-            console.log(event);
             setTimeout(function(){ 
                 self.setState({percent: 0,showUploader:false}) 
             }, 600);
         });
         socket.on('upload status', function (data) {
-            console.log(data)
             if(!data.status){
                 data.problem.forEach(function(element) {
                     if(element.includes('csv')){
@@ -295,37 +292,11 @@ class Modal1 extends Component {
     }
 }
 
-class Modal2 extends Component {
-  
-    
-    render() {
-       return (
-          <div id="modal2" className="modal bottom-sheet">
-            <div className="modal-content">
-                <div className="modal-content">
-                    <h3 className="header">Simulations in Progress</h3>
-                    <ul className="collection">
-                     <li className="collection-item avatar">
-                        <i className="material-icons circle">assignment_ind</i>
-                        <span className="title">Simulation Name</span>
-                        <p>Meta Data</p>
-                      </li>
-                      <li className="collection-item avatar">
-                        <i className="material-icons circle">folder</i>
-                        <span className="title">Simulation Name</span>
-                        <p>Meta Data</p>
-                      </li>
-                    </ul>
-                  </div>
-            </div>
-          </div>
 
-       )}
-}
 
 class UploadModal extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         WebFont.load({
           google: {
             families: ['Material Icons', 'sans-serif']
@@ -337,14 +308,20 @@ class UploadModal extends Component {
         var elems = document.querySelectorAll('.fixed-action-btn');
         var instances = M.FloatingActionButton.init(elems, {direction:'left'});
         M.AutoInit();
+
+        const socket = this.props.socket;
+        this.setState({
+            socket 
+        })
     }
 
     render() {
+        const socket = this.props.socket;
+
         return (            
             <div>
                 <FloatingModalButton />
-                <Modal1 />
-                <Modal2 />
+                <Modal1 socket={socket} />
             </div>
         )
     }
