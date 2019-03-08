@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import '../CSS/style.css';
+import faker from 'faker';
 
 const styles = {
     border: 'solid black 1px',
@@ -11,7 +12,7 @@ const Tweet = props => (
     <div className="tweetEntry">
         <div className="tweetEntry-content">
             <a className="tweetEntry-account-group" href="[accountURL]">
-                <img className="tweetEntry-avatar" src="http://placekitten.com/200/200"/>
+                <img className="tweetEntry-avatar" src={props.avatar}/>
                 <strong className="tweetEntry-fullname">
                     {props.screenName}
                 </strong>
@@ -43,6 +44,7 @@ Tweet.propTypes = {
     retweet: PropTypes.number,
     createdAt: PropTypes.string,
     screenName: PropTypes.string,
+    avatar: PropTypes.string,
 };
 
 export default Tweet;
