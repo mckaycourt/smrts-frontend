@@ -9,6 +9,9 @@ import UploadModal from "./components/UploadModal";
 class App extends Component {
     constructor() {
         super();
+        this.state = {
+            simulation: false,
+        }
     }
 
     render() {
@@ -18,7 +21,7 @@ class App extends Component {
             <>
                 <SimListApp socket={socket}/>
                 <Sim socket={socket}/>
-                <UploadModal/>
+                <UploadModal socket={socket}/>
             </>
         );
     }

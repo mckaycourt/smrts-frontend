@@ -43,10 +43,6 @@ function returnLoader() {
     return {__html: loaderHTML}
 }
 
-function rowClick(properties) {
-    console.log(properties);
-}
-
 class SimListApp extends Component {
     constructor(props) {
         super(props);
@@ -86,6 +82,10 @@ class SimListApp extends Component {
         }
     }
 
+    rowClick = (properties) => {
+        console.log(properties);
+    }
+
     componentDidMount() {
         const socket = this.props.socket;
         getSimList((incomingData) => {
@@ -120,7 +120,7 @@ class SimListApp extends Component {
                         striped={true}
                         pointerOnHover={true}
                         className={''}
-                        onRowClicked={rowClick}
+                        onRowClicked={this.rowClick}
                         defaultSortAsc={false}
                     />
                 ) : (
