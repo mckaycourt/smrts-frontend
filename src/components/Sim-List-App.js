@@ -5,23 +5,6 @@ import 'materialize-css/dist/css/materialize.min.css';
 import '../CSS/Sim-List-App.css';
 var moment = require('moment');
 
-function getSimList(list, socket) {
-    socket.on('get list of sims', function (data) {
-        console.log('getting list of sims');
-        setTimeout(() => {
-            list((data))
-        }, 600)
-    });
-
-    function conformDates(allData) {
-        var returnArray = [];
-        allData.forEach(function (element) {
-            element.date = new Date(element.date).toDateString();
-            returnArray.push(element)
-        });
-        return allData
-    }
-}
 
 function returnLoader() {
         var loaderHTML = `  
@@ -88,13 +71,18 @@ class SimListApp extends Component {
 
     componentDidMount() {
         const socket = this.props.socket;
-        getSimList((incomingData) => {
-            console.log(incomingData);
+
+        socket.on('get list of sims', data => {
+            console.log(data);
             this.setState({
                 simExist: true,
-                data: incomingData
+                data: data
             })
-        }, socket);
+        });
+        
+        this.setState({
+            socket
+        })
     }
 
     // getSims = () => {

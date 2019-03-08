@@ -10,6 +10,14 @@ import '../CSS/UploadModal.css';
 import FloatingModalButton from './FloatingModalButton';
 import Modal1 from './Modal1';
 import Modal2 from './Modal2';
+import UploaderProgressBar from './UploaderProgressBar';
+
+
+
+
+
+//socket stuff
+var SocketIOFileUpload = require('socketio-file-upload');
 
 
 class UploadModal extends Component {
@@ -26,18 +34,22 @@ class UploadModal extends Component {
         var elems = document.querySelectorAll('.fixed-action-btn');
         var instances = M.FloatingActionButton.init(elems, {direction:'left'});
         M.AutoInit();
+
+        const socket = this.props.socket;
+        this.setState({
+            socket 
+        })
     }
 
     render() {
-        //socket stuff
-        let SocketIOFileUpload = require('socketio-file-upload');
         const socket = this.props.socket;
+        let SocketIOFileUpload = require('socketio-file-upload');
         let uploader = new SocketIOFileUpload(socket);
-        return (            
+        
+        return (    
             <div>
                 <FloatingModalButton />
                 <Modal1 socket={socket} uploader={uploader}/>
-                <Modal2 />
             </div>
         )
     }
