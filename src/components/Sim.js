@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Tweets from '../components/Tweets';
+import Slider from './Slider';
 
 
 class Sim extends Component {
@@ -62,6 +63,7 @@ class Sim extends Component {
                 <button onClick={this.joinRoom}>Join Room</button>
                 <button onClick={this.addTweet}>Add Tweet</button>
                 <Tweets data={this.state.data}/>
+                <Slider/>
             </div>
         )
     }
