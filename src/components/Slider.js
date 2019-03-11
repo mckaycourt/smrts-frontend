@@ -3,26 +3,26 @@ import '../CSS/Slider.css'
 
 class Slider extends React.Component {
     state = {
-        value: 50,
+        value: 20,
     };
 
     handleChange = (event, value) => {
-        this.setState({ value });
-        console.log({value});
+        this.setState({value: event.target.value});
     };
 
     render() {
-        const { value } = this.state;
         return (
-            <div className="slidecontainer">
-                <input 
-                    type="range" 
-                    min="1" 
-                    max="100" 
-                    value={value} 
-                    className="slider" id="myRange" 
-                    onChange={this.handleChange}
-                />
+            <div className="card">
+                <div className="slidecontainer">
+                    <input 
+                        type="range" 
+                        min="1" 
+                        max="100" 
+                        value={this.state.value} 
+                        className="slider" id="myRange" 
+                        onChange={this.handleChange}
+                    />
+                </div>
             </div>
         );
     };
