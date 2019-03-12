@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import DataTable from 'react-data-table-component';
 import 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css';
+import M from 'materialize-css';
 var moment = require('moment');
 
 
@@ -9,7 +10,28 @@ class ActiveSimulations extends Component {
     constructor() {
         super();
         this.state = {roomsList:[]};
-
+        const columnsConfig = [
+            {
+                name: 'Simulation Name',
+                selector: 'name',
+                sortable: true,
+                minWidth:'50%'
+            },
+            {
+                name: 'Type',
+                selector: 'type',
+                sortable: true,
+                cell: row => <div>{row.type}</div>
+            },
+            {
+                name: 'Date Uploaded',
+                selector: 'time',
+                format: row => moment(row.time).format('lll'),
+                sortable: true,
+                right: true
+            }
+        ];
+        this.state = {columnsConfig:columnsConfig}
     }
 
     componentDidMount() {
@@ -20,10 +42,8 @@ class ActiveSimulations extends Component {
             })
         });
         socket.on('join room', function (data) {
-            console.log('joining room', data)
-        });
-        socket.on('create room', function (data) {
-            console.log('room has been created', data)
+            console.log('joining room', data);
+            M.toast({html: 'Room joined: '+ data, classes: 'green darken-2 rounded'})
         });
 
         this.setState({
@@ -31,82 +51,47 @@ class ActiveSimulations extends Component {
         })
     }
 
+    rowClick = (properties) => {
+        console.log(properties);
+        this.requestJoinRoom(properties.name)
+    }
 
-    requestJoinRoom = () => {
+    requestJoinRoom = (name) => {
         const {socket} = this.state;
-        var roomName = "default room";
+        var roomName = name;
         console.log('request to join room', roomName)
         socket.emit('join room', roomName);
     }
-
-    requestCreateRoom = () => {
-        const {socket} = this.state;
-        var roomName = "new room";
-        console.log('creating room', roomName)
-        socket.emit('create room', roomName);
-    }
-
 
     render() {
         const roomsList = this.state.roomsList;
 
         return (
-            <div>
-                <button onClick={this.requestCreateRoom}>
-                    Create Room
-                </button>
-                <Modal2 roomsList={roomsList} />
-            </div>
-
-        )
-    }
-}
-
-function Modal2(props){
-    const columnsConfig = [
-        {
-            name: 'Simulation Name',
-            selector: 'name',
-            sortable: true,
-            minWidth:'50%'
-        },
-        {
-            name: 'Type',
-            selector: 'type',
-            sortable: true,
-            cell: row => <div>{row.type}</div>
-        },
-        {
-            name: 'Time Started',
-            selector: 'date',
-            format: row => moment(row.time).format('llll'),
-            sortable: true,
-            right: true,
-        }
-    ];
-    const fakeData =[{name:'data',time:new Date(),type:'Twitter'}]
-    console.log(props)
-    
-    return (
             <div id="modal2" className="modal bottom-sheet">
             <div className="modal-content">
                 <div className="modal-content">
                     <h3 className="header">Simulations in Progress</h3>
                     <DataTable
-                        columns={columnsConfig}
-                        data={props.roomsList}
+                        columns={this.state.columnsConfig}
+                        data={roomsList}
                         highlightOnHover
                         defaultSortField="time"
                         responsive={true}
                         striped={true}
                         pointerOnHover={true}
-                        className={''}
+                        className={'simsInProgress'}
+                        defaultSortAsc={false}
+                        onRowClicked={this.rowClick}
                     />
                   </div>
             </div>
         </div>
-    )
+
+        )
+    }
 }
+
+
 
 export default ActiveSimulations;
 

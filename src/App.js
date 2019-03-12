@@ -19,8 +19,8 @@ class App extends Component {
             <>
                 <SimListApp socket={socket}/>
                 <Sim socket={socket}/>
-                <UploadModal socket={socket} />
                 <ActiveSimulations socket={socket}/>
+                <UploadModal socket={socket} />
 
             </>
         );

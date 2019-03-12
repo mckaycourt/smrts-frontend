@@ -3,28 +3,9 @@ import DataTable from 'react-data-table-component';
 import 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css';
 import '../CSS/Sim-List-App.css';
+import M from 'materialize-css';
 var moment = require('moment');
 
-
-function returnLoader() {
-        var loaderHTML = `  
-        <div class="center-align">  
-          <div class="preloader-wrapper big active">
-            <div class="spinner-layer spinner-blue-only">
-              <div class="circle-clipper left">
-                <div class="circle"></div>
-              </div><div class="gap-patch">
-                <div class="circle"></div>
-              </div><div class="circle-clipper right">
-                <div class="circle"></div>
-              </div>
-            </div>
-          </div>
-        </div>`;
-
-
-    return {__html: loaderHTML}
-}
 
 class SimListApp extends Component {
     constructor(props) {
@@ -67,6 +48,7 @@ class SimListApp extends Component {
 
     rowClick = (properties) => {
         console.log(properties);
+        this.requestCreateRoom(properties.nameOfSim, properties.type);
     }
 
     componentDidMount() {
@@ -79,15 +61,21 @@ class SimListApp extends Component {
                 data: data
             })
         });
+        socket.on('create room', function (data) {
+              M.toast({html: 'Room created: '+ data, classes: 'green darken-1 rounded'})
+        });
         
         this.setState({
             socket
         })
     }
-
-    // getSims = () => {
-    //     socket.emit('get list of sims');
-    // };
+ 
+    requestCreateRoom = (roomName, type) => {
+        const {socket} = this.state;
+        var roomName = roomName;
+        var type = type
+        socket.emit('create room', roomName, type);
+    }
 
     render() {
         const receivedSimulation = this.state.simExist;
@@ -121,3 +109,24 @@ class SimListApp extends Component {
 
 
 export default SimListApp;
+
+
+function returnLoader() {
+        var loaderHTML = `  
+        <div class="center-align">  
+          <div class="preloader-wrapper big active">
+            <div class="spinner-layer spinner-blue-only">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div><div class="gap-patch">
+                <div class="circle"></div>
+              </div><div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+          </div>
+        </div>`;
+
+
+    return {__html: loaderHTML}
+}
