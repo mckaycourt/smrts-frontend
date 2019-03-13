@@ -29,3 +29,6 @@ class Slider extends React.Component {
 }
 
 export default Slider;
+
+//https://www.w3schools.com/howto/howto_js_rangeslider.asp
+//https://materializecss.com/range.html
