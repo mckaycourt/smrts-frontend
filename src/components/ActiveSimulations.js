@@ -63,14 +63,19 @@ class ActiveSimulations extends Component {
         socket.emit('join room', roomName);
     }
 
+    deleteAllRooms = () => {
+        const {socket} = this.state;
+        socket.emit('delete all rooms', '');
+    }
+
     render() {
         const roomsList = this.state.roomsList;
 
         return (
             <div id="modal2" className="modal bottom-sheet">
             <div className="modal-content">
-                <div className="modal-content">
-                    <h3 className="header">Simulations in Progress</h3>
+                    <h3 className="header">Simulations in Progress <a onClick={this.deleteAllRooms} className="btn-floating btn-large waves-effect waves-light red right"><i className="material-icons">delete_sweep</i></a>
+                    </h3>
                     <DataTable
                         columns={this.state.columnsConfig}
                         data={roomsList}
@@ -83,7 +88,6 @@ class ActiveSimulations extends Component {
                         defaultSortAsc={false}
                         onRowClicked={this.rowClick}
                     />
-                  </div>
             </div>
         </div>
 
