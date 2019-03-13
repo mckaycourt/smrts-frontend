@@ -74,7 +74,7 @@ class ActiveSimulations extends Component {
         return (
             <div id="modal2" className="modal bottom-sheet">
             <div className="modal-content">
-                    <h3 className="header">Simulations in Progress <a onClick={this.deleteAllRooms} className="btn-floating btn-large waves-effect waves-light red right"><i className="material-icons">delete_sweep</i></a>
+                    <h3 className="header">Simulations in Progress <button onClick={this.deleteAllRooms} className="btn-floating btn-large waves-effect waves-light red right"><i className="material-icons">delete_sweep</i></button>
                     </h3>
                     <DataTable
                         columns={this.state.columnsConfig}

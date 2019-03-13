@@ -16,36 +16,37 @@ class Sim extends Component {
     componentDidMount() {
         const socket = this.props.socket;
 
-        socket.on("tweet", data => {
+        // socket.on("tweet", data => {
+        //     this.setState({
+        //             response: true,
+        //         }
+        //     );
+        //     console.log(data);
+        //     let prevData = this.state.data;
+        //     prevData.push(data[0]);
+        // });
+
+        socket.on("results", data => {
+            console.log('results', data);
             this.setState({
-                    response: true,
-                }
-            );
-            console.log(data);
-            let prevData = this.state.data;
-            prevData.push(data);
-            this.setState({
-                prevData,
+                response: true,
+                data: data[0].simulation,
             });
         });
 
         socket.on('join room', data => {
             console.log('join room -> ', data);
-            let prevData = this.state.data;
-            prevData.push('join ' + data);
-            this.setState({
-                prevData,
-            });
+            // let prevData = this.state.data;
+            // prevData.push('join ' + data);
+            // this.setState({
+            //     prevData,
+            // });
         });
-
-        this.setState({
-            socket
-        })
     }
 
 
     joinRoom = () => {
-        const {socket} = this.state;
+        const {socket} = this.props;
         socket.emit('join room', 'default room');
     };
 

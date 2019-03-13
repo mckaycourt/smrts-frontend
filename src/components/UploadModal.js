@@ -1,23 +1,23 @@
 import React, {
     Component
 } from 'react';
-import openSocket from 'socket.io-client';
-import DataTable from 'react-data-table-component';
+// import openSocket from 'socket.io-client';
+// import DataTable from 'react-data-table-component';
 import M from 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css';
 import WebFont from 'webfontloader';
 import '../CSS/UploadModal.css';
 import FloatingModalButton from './FloatingModalButton';
 import Modal1 from './Modal1';
-import Modal2 from './Modal2';
-import UploaderProgressBar from './UploaderProgressBar';
+// import Modal2 from './Modal2';
+// import UploaderProgressBar from './UploaderProgressBar';
 
 
 
 
 
 //socket stuff
-var SocketIOFileUpload = require('socketio-file-upload');
+// var SocketIOFileUpload = require('socketio-file-upload');
 
 
 class UploadModal extends Component {
@@ -32,7 +32,7 @@ class UploadModal extends Component {
 
     componentDidMount() {
         var elems = document.querySelectorAll('.fixed-action-btn');
-        var instances = M.FloatingActionButton.init(elems, {direction:'left'});
+        M.FloatingActionButton.init(elems, {direction:'left'});
         M.AutoInit();
 
         const socket = this.props.socket;

@@ -10,7 +10,16 @@ import UploadModal from "./components/UploadModal";
 class App extends Component {
     constructor() {
         super();
+        this.state = {
+            simulate: false,
+        }
     }
+
+    changeView = () => {
+        this.setState({
+            simulate: true,
+        })
+    };
 
     render() {
         const endpoint = "http://127.0.0.1:3000";

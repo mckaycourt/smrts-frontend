@@ -49,7 +49,11 @@ class SimListApp extends Component {
     rowClick = (properties) => {
         console.log(properties);
         this.requestCreateRoom(properties.nameOfSim, properties.type);
-    }
+
+        const socket = this.props.socket;
+
+        socket.emit('click', properties);
+    };
 
     componentDidMount() {
         const socket = this.props.socket;
@@ -64,18 +68,18 @@ class SimListApp extends Component {
         socket.on('create room', function (data) {
               M.toast({html: 'Room created: '+ data, classes: 'green darken-1 rounded'})
         });
-        
+
         this.setState({
             socket
         })
     }
- 
+
     requestCreateRoom = (roomName, type) => {
         const {socket} = this.state;
-        var roomName = roomName;
-        var type = type
+        // var roomName = roomName;
+        // var type = type
         socket.emit('create room', roomName, type);
-    }
+    };
 
     render() {
         const receivedSimulation = this.state.simExist;

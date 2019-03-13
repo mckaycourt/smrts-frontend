@@ -4,8 +4,8 @@ import DataTable from "react-data-table-component";
 import UploaderProgressBar from './UploaderProgressBar';
 
 class Modal1 extends Component {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         const columns = [
             {
                 name: 'Header',
@@ -22,11 +22,13 @@ class Modal1 extends Component {
                 selector: 'desc',
             }
         ];
+
         const infoTableTheming = {
             rows: {
                 height: '34px'
             }
-        }
+        };
+
         this.state = {
             percent: 1,
             showUploader: false,
@@ -127,13 +129,10 @@ class Modal1 extends Component {
 
         //materialize init
         var elems = document.querySelectorAll('select');
-        var instances = M.FormSelect.init(elems);
+        M.FormSelect.init(elems);
         M.AutoInit();
 
         //uploader.listenOnSubmit(document.getElementById("my_button"), document.getElementById("siofu_input"));
-
-
-
     }
 
     handleSubmitClick = () => {
@@ -145,7 +144,7 @@ class Modal1 extends Component {
             M.toast({html: 'No Simulation Name', classes: 'red darken-1 rounded'});
             return
         }
-        if(document.getElementById("siofu_input").files.length == 0){
+        if(document.getElementById("siofu_input").files.length === 0){
             M.toast({html: 'No File Attached', classes: 'red darken-1 rounded'});
             return
         }

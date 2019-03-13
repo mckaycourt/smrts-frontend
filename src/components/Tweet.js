@@ -1,18 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import '../CSS/style.css';
-import faker from 'faker';
-
-const styles = {
-    border: 'solid black 1px',
-    margin: '10px',
-};
 
 const Tweet = props => (
     <div className="tweetEntry">
         <div className="tweetEntry-content">
             <a className="tweetEntry-account-group" href="[accountURL]">
-                <img className="tweetEntry-avatar" src={props.avatar}/>
+                <img alt='img' className="tweetEntry-avatar" src={props.avatar}/>
                 <strong className="tweetEntry-fullname">
                     {props.screenName}
                 </strong>
@@ -26,7 +20,7 @@ const Tweet = props => (
         {
             props.img &&
             <div className="optionalMedia">
-                <img className="optionalMedia-img" src="http://placekitten.com/500/400"/>
+                <img alt='img' className="optionalMedia-img" src="http://placekitten.com/500/400"/>
             </div>
         }
         <div className='icons'>
