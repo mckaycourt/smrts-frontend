@@ -76,8 +76,6 @@ class SimListApp extends Component {
 
     requestCreateRoom = (roomName, type) => {
         const {socket} = this.state;
-        // var roomName = roomName;
-        // var type = type
         socket.emit('create room', roomName, type);
     };
 
