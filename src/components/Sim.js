@@ -61,8 +61,6 @@ class Sim extends Component {
     render() {
         return (
             <div>
-                <button onClick={this.joinRoom}>Join Room</button>
-                <button onClick={this.addTweet}>Add Tweet</button>
                 <Tweets data={this.state.data}/>
                 <Slider/>
             </div>
