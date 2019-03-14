@@ -12,14 +12,6 @@ import Modal1 from './Modal1';
 // import Modal2 from './Modal2';
 // import UploaderProgressBar from './UploaderProgressBar';
 
-
-
-
-
-//socket stuff
-// var SocketIOFileUpload = require('socketio-file-upload');
-
-
 class UploadModal extends Component {
     constructor(props) {
         super(props);

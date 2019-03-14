@@ -2,17 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Navbar = props => (
-    <div>
-        <ul>
-            {
-                props.options.map((option, i) => (
-                    <li key={i}>
-                        <a href='#'>{option}</a>
-                    </li>
-                ))
-            }
-        </ul>
+  <nav>
+    <div className="nav-wrapper blue darken-1">
+      <a href="#" className="brand-logo center">SMRTS Simulator</a>
     </div>
+  </nav>
 );
 
 Navbar.propTypes = {

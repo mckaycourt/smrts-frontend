@@ -84,7 +84,7 @@ class SimListApp extends Component {
         const simulationData = this.state.data;
 
         return (
-            <div className="SimList">
+            <div className="SimList 2">
                 {receivedSimulation ? (
                     <DataTable
                         pagination

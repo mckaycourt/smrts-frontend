@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import socketIOClient from "socket.io-client";
+import Navbar from './components/Navbar';
 import Sim from './components/Sim';
 import SimListApp from './components/Sim-List-App';
 import ActiveSimulations from './components/ActiveSimulations';
@@ -26,6 +27,7 @@ class App extends Component {
         const socket = socketIOClient(endpoint);
         return (
             <>
+                <Navbar/>
                 <SimListApp socket={socket}/>
                 <Sim socket={socket}/>
                 <ActiveSimulations socket={socket}/>
