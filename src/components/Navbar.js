@@ -4,7 +4,16 @@ import PropTypes from 'prop-types';
 const Navbar = props => (
   <nav>
     <div className="nav-wrapper blue darken-1">
-      <a href="#" className="brand-logo center">SMRTS Simulator</a>
+      <a href="/" className="brand-logo center">SMRTS Simulator</a>
+    </div>
+
+
+    <div className="nav-wrapper">
+      <div className="col s12">
+        <a href="#!" className="breadcrumb">First</a>
+        <a href="#!" className="breadcrumb">Second</a>
+        <a href="#!" className="breadcrumb">Third</a>
+      </div>
     </div>
   </nav>
 );
