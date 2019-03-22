@@ -32,7 +32,6 @@ class App extends Component {
                 <Sim socket={socket}/>
                 <ActiveSimulations socket={socket}/>
                 <UploadModal socket={socket} />
-
             </>
         );
     }

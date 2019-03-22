@@ -50,9 +50,9 @@ class SimListApp extends Component {
         console.log(properties);
         this.requestCreateRoom(properties.nameOfSim, properties.type);
 
-        const socket = this.props.socket;
+        // const socket = this.props.socket;
 
-        socket.emit('click', properties);
+        // socket.emit('click', properties);
     };
 
     componentDidMount() {

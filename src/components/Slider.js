@@ -3,7 +3,6 @@ import '../CSS/Slider.css'
 
 class Slider extends React.Component {
     state = {
-        value: 20,
         playPause: false,
     };
 
@@ -33,8 +32,8 @@ class Slider extends React.Component {
                     <input 
                         type="range" 
                         min="1" 
-                        max="100" 
-                        value={this.state.value} 
+                        max={this.props.max}
+                        value={this.props.value}
                         className="scrubber"
                         onChange={this.handleChange}
                     />

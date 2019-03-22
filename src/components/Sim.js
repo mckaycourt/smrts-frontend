@@ -9,22 +9,23 @@ class Sim extends Component {
         this.state = {
             response: false,
             data: [],
-            total: 100,
+            max: 100,
         }
     }
 
     componentDidMount() {
         const socket = this.props.socket;
+        // console.log(Slider.state.value);
 
-        // socket.on("tweet", data => {
-        //     this.setState({
-        //             response: true,
-        //         }
-        //     );
-        //     console.log(data);
-        //     let prevData = this.state.data;
-        //     prevData.push(data[0]);
-        // });
+        socket.on("tweet", data => {
+            this.setState({
+                    response: true,
+                }
+            );
+            console.log(data);
+            let prevData = this.state.data;
+            prevData.push(data);
+        });
 
         socket.on("results", data => {
             console.log('results', data);
@@ -42,6 +43,12 @@ class Sim extends Component {
             //     prevData,
             // });
         });
+
+        socket.on('max tweets', data => {
+            this.setState({
+                max: data,
+            })
+        })
     }
 
 
@@ -58,11 +65,15 @@ class Sim extends Component {
         })
     };
 
+    style = {
+        paddingBottom: '100px',
+    };
+
     render() {
         return (
-            <div>
+            <div style={this.style}>
                 <Tweets data={this.state.data}/>
-                <Slider/>
+                <Slider max={this.state.max} value={this.state.data.length}/>
             </div>
         )
     }
