@@ -43,7 +43,7 @@ class App extends Component {
                 </div>
                 <div style={this.state.simListStyle}>
                     <SimListApp changeView={this.changeView} socket={socket}/>
-                    <ActiveSimulations socket={socket}/>
+                    <ActiveSimulations changeView={this.changeView} socket={socket}/>
                     <UploadModal socket={socket}/>
                 </div>
             </>

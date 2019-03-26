@@ -54,6 +54,7 @@ class ActiveSimulations extends Component {
     rowClick = (properties) => {
         console.log(properties);
         this.requestJoinRoom(properties.name)
+        this.props.changeView();
     }
 
     requestJoinRoom = (name) => {
