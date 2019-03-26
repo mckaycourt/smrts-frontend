@@ -51,7 +51,6 @@ class SimListApp extends Component {
         this.requestCreateRoom(properties.nameOfSim, properties.type);
 
         // const socket = this.props.socket;
-
         // socket.emit('click', properties);
         this.props.changeView();
     };
@@ -98,7 +97,7 @@ class SimListApp extends Component {
                         responsive={true}
                         striped={true}
                         pointerOnHover={true}
-                        className={''}
+                        className={'container'}
                         onRowClicked={this.rowClick}
                         defaultSortAsc={false}
                     />
@@ -109,7 +108,6 @@ class SimListApp extends Component {
         )
     }
 }
-
 
 export default SimListApp;
 

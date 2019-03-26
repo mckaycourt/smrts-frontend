@@ -11,6 +11,7 @@ body {
 	width: 588px;
 	margin: auto;
 	border-radius: 5px;
+    margin-top: 50px; /*Nate added this...*/
 }
 
 /* The action list is optional. */

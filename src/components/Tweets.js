@@ -16,8 +16,15 @@ for(let i = 0; i < 1000; i++){
 
 const Tweets = props => (
     <div className='tweetEntry-tweetHolder'>
+        {  console.log(props.data)}
+        {!props.data.length ? (
+          <div className="progress blue">
+              <div className="indeterminate blue lighten-4"></div>
+          </div>                 
+        ):('')}
+    
         {
-            props.data.map((tweet, i) => (
+        props.data.map((tweet, i) => (
                     <Tweet username={tweet.user.name}
                            body={tweet.text}
                            retweet={tweet.retweet_count}

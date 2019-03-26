@@ -70,6 +70,8 @@ class Sim extends Component {
     };
 
     render() {
+        const res =  this.state.response;
+        
         return (
             <div style={this.style}>
                 <Tweets data={this.state.data}/>
@@ -80,3 +82,6 @@ class Sim extends Component {
 }
 
 export default Sim;
+
+
+
