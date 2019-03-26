@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Tweet from "./Tweet";
 import faker from 'faker';
+var moment = require('moment');
 
 const profilePics = [];
 // const userNames = [];
@@ -18,19 +19,29 @@ const Tweets = props => (
     <div className='tweetEntry-tweetHolder'>
         {  console.log(props.data)}
         {!props.data.length ? (
-          <div className="progress blue">
-              <div className="indeterminate blue lighten-4"></div>
-          </div>                 
+            <div className="center-align">
+            <div className="preloader-wrapper big active">
+                <div className="spinner-layer spinner-blue-only">
+                  <div className="circle-clipper left">
+                    <div className="circle"></div>
+                  </div><div className="gap-patch">
+                    <div className="circle"></div>
+                  </div><div className="circle-clipper right">
+                    <div clclassName="circle"></div>
+                  </div>
+                </div>
+              </div> 
+            </div>
         ):('')}
     
         {
         props.data.map((tweet, i) => (
-                    <Tweet username={tweet.user.name}
+                    <Tweet username={tweet.user.screen_name}
                            body={tweet.text}
                            retweet={tweet.retweet_count}
-                           createdAt={tweet.created_at}
+                           createdAt={moment(tweet.created_at).format('llll')}
                            key={i}
-                           screenName={tweet.user.screen_name}
+                           screenName={tweet.user.name}
                            avatar={profilePics[i]}
                     />
             ))

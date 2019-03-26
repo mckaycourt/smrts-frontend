@@ -11,7 +11,7 @@ const Tweet = props => (
                     {props.screenName}
                 </strong>
                 <span className="tweetEntry-username"> @<b>{props.username}</b></span>
-                <span className="tweetEntry-timestamp">- {props.createdAt}</span>
+                <span className="tweetEntry-timestamp"> - {props.createdAt}</span>
             </a>
             <div className="tweetEntry-text-container">
                 {props.body}

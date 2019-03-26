@@ -262,6 +262,7 @@ class Modal1 extends Component {
                             overflowY={true}
                             responsive={true}
                             customTheme={this.state.infoTableTheming}
+                            highlightOnHover
                         />
                     </div>
                 </div>
