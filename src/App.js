@@ -12,13 +12,23 @@ class App extends Component {
     constructor() {
         super();
         this.state = {
-            simulate: false,
+            simListStyle: {
+                display: 'block',
+            },
+            simStyle: {
+                display: 'none',
+            },
         }
     }
 
     changeView = () => {
         this.setState({
-            simulate: true,
+            simListStyle: {
+                display: 'none',
+            },
+            simStyle: {
+                display: 'block',
+            }
         })
     };
 
@@ -28,10 +38,14 @@ class App extends Component {
         return (
             <>
                 <Navbar/>
-                <SimListApp socket={socket}/>
-                <Sim socket={socket}/>
-                <ActiveSimulations socket={socket}/>
-                <UploadModal socket={socket} />
+                <div style={this.state.simStyle}>
+                    <Sim socket={socket}/>
+                </div>
+                <div style={this.state.simListStyle}>
+                    <SimListApp changeView={this.changeView} socket={socket}/>
+                    <ActiveSimulations socket={socket}/>
+                    <UploadModal socket={socket}/>
+                </div>
             </>
         );
     }
