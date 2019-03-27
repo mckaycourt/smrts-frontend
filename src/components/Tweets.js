@@ -5,12 +5,12 @@ import faker from 'faker';
 var moment = require('moment');
 
 const profilePics = [];
-// const userNames = [];
+const userNames = [];
 // const tweetText = [];
 
 for(let i = 0; i < 1000; i++){
     profilePics.push(faker.image.avatar());
-    // userNames.push(faker.name.findName());
+    userNames.push(faker.name.findName());
     // tweetText.push(faker.lorem.sentence());
 }
 
@@ -34,14 +34,16 @@ const Tweets = props => (
             </div>
         ):('')}
     
+    
         {
         props.data.map((tweet, i) => (
-                    <Tweet username={tweet.user.screen_name}
+                    <Tweet 
+                           username={tweet.user.screen_name}
                            body={tweet.text}
                            retweet={tweet.retweet_count}
                            createdAt={moment(tweet.created_at).format('llll')}
                            key={i}
-                           screenName={tweet.user.name}
+                           screenName={userNames[i]}
                            avatar={profilePics[i]}
                     />
             ))
