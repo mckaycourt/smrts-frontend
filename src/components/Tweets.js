@@ -27,7 +27,7 @@ const Tweets = props => (
                   </div><div className="gap-patch">
                     <div className="circle"></div>
                   </div><div className="circle-clipper right">
-                    <div clclassName="circle"></div>
+                    <div className="circle"></div>
                   </div>
                 </div>
               </div> 
