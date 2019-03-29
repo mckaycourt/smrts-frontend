@@ -18,6 +18,9 @@ class App extends Component {
             simStyle: {
                 display: 'none',
             },
+            scrubStyle: {
+                display: 'none',
+            },
         }
     }
 
@@ -32,6 +35,14 @@ class App extends Component {
         })
     };
 
+    changeAdmin = () => {
+        this.setState({
+            scrubStyle: {
+                display: 'block',
+            }
+        })
+    };
+
     render() {
         const endpoint = "http://127.0.0.1:3000";
         const socket = socketIOClient(endpoint);
@@ -39,10 +50,10 @@ class App extends Component {
             <>
                 <Navbar/>
                 <div style={this.state.simStyle}>
-                    <Sim socket={socket}/>
+                    <Sim scrubStyle={this.state.scrubStyle} socket={socket}/>
                 </div>
                 <div style={this.state.simListStyle}>
-                    <SimListApp changeView={this.changeView} socket={socket}/>
+                    <SimListApp changeAdmin={this.changeAdmin} changeView={this.changeView} socket={socket}/>
                     <ActiveSimulations changeView={this.changeView} socket={socket}/>
                     <UploadModal socket={socket}/>
                 </div>

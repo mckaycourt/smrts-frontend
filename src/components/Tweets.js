@@ -8,11 +8,11 @@ const profilePics = [];
 const userNames = [];
 // const tweetText = [];
 
-for(let i = 0; i < 1000; i++){
-    profilePics.push(faker.image.avatar());
-    userNames.push(faker.name.findName());
+// for(let i = 0; i < 1000; i++){
+    // profilePics.push(faker.image.avatar());
+    // userNames.push(faker.name.findName());
     // tweetText.push(faker.lorem.sentence());
-}
+// }
 
 
 const Tweets = props => (
@@ -43,8 +43,10 @@ const Tweets = props => (
                            retweet={tweet.retweet_count}
                            createdAt={moment(tweet.created_at).format('llll')}
                            key={i}
-                           screenName={userNames[i]}
-                           avatar={profilePics[i]}
+                           screenName={tweet.user.screen_name}
+                           avatar={tweet.user.profile_image_url}
+                           img={tweet.extended_entities.media[0].media_url}
+                           hashTags={[{text: 'blah'},{text: 'blah'},{text: 'blah'},{text: 'blah'}]}
                     />
             ))
         }

@@ -5,22 +5,31 @@ import '../CSS/style.css';
 const Tweet = props => (
     <div className="tweetEntry">
         <div className="tweetEntry-content">
-            <a className="tweetEntry-account-group" href="[accountURL]">
-                <img alt='img' className="tweetEntry-avatar" src={props.avatar}/>
+            <div className="tweetEntry-account-group">
+                <img alt='img' className="tweetEntry-avatar" src={props.avatar || 'https://pbs.twimg.com/profile_images/789948995183316993/POwGu01F_bigger.jpg'}/>
                 <strong className="tweetEntry-fullname">
                     {props.screenName}
                 </strong>
                 <span className="tweetEntry-username"> @<b>{props.username}</b></span>
                 <span className="tweetEntry-timestamp"> - {props.createdAt}</span>
-            </a>
+                <span className="tweetEntry-timestamp">- {props.createdAt}</span>
+            </div>
             <div className="tweetEntry-text-container">
                 {props.body}
+                <div className='hashTags'>
+                    {
+                        props.hashTags.map((hashTag, i) => (
+                            <span key={i}>#{hashTag.text} </span>
+                        ))
+                    }
+                </div>
             </div>
         </div>
+
         {
             props.img &&
             <div className="optionalMedia">
-                <img alt='img' className="optionalMedia-img" src="http://placekitten.com/500/400"/>
+                <img alt='img' className="optionalMedia-img" src={props.img}/>
             </div>
         }
         <div className='icons'>

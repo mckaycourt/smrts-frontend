@@ -53,6 +53,7 @@ class SimListApp extends Component {
         // const socket = this.props.socket;
         // socket.emit('click', properties);
         this.props.changeView();
+        this.props.changeAdmin();
     };
 
     componentDidMount() {
