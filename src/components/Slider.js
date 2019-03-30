@@ -6,25 +6,29 @@ class Slider extends React.Component {
     state = {
         playPause: false,
     };
-
+    
     componentDidMount() {
         //makes the hovering thing
         var elems  = document.querySelectorAll("input[type=range]"); 
         M.Range.init(elems);
     }
-
+    
     handleChange = (event, value) => {
         this.setState({value: event.target.value});
     };
-
+    
     play = () => {
+        const socket = this.props.socket;
         this.setState({playPause: false});
+        socket.emit('play', true);
         console.log("play clicked");
         M.toast({html: 'Simulation Resumed', classes: 'green darken-2 rounded'})
     }
 
     pause = () => {
+        const socket = this.props.socket;
         this.setState({playPause: true});
+        socket.emit('pause', true);
         console.log("pause clicked");
         M.toast({html: 'Simulation Paused', classes: 'red darken-3 rounded text-center'})
     }

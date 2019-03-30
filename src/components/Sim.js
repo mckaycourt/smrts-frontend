@@ -76,7 +76,7 @@ class Sim extends Component {
             <div style={this.style}>
                 <Tweets data={this.state.data}/>
                 <div style={this.props.scrubStyle}>
-                    <Slider max={this.state.max} value={this.state.data.length}/>
+                    <Slider max={this.state.max} value={this.state.data.length} socket={this.props.socket}/>
                 </div>
             </div>
         )
