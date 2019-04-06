@@ -20,15 +20,18 @@ class Slider extends React.Component {
     play = () => {
         const socket = this.props.socket;
         this.setState({playPause: false});
-        socket.emit('play', true);
+        let room = this.props.room;
+        socket.emit('play', room);
         console.log("play clicked");
         M.toast({html: 'Simulation Resumed', classes: 'green darken-2 rounded'})
     }
 
     pause = () => {
         const socket = this.props.socket;
+        console.log(this.props.room);
+        let room = this.props.room
         this.setState({playPause: true});
-        socket.emit('pause', true);
+        socket.emit('pause', room);
         console.log("pause clicked");
         M.toast({html: 'Simulation Paused', classes: 'red darken-3 rounded text-center'})
     }

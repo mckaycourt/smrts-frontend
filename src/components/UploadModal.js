@@ -1,8 +1,6 @@
 import React, {
     Component
 } from 'react';
-// import openSocket from 'socket.io-client';
-// import DataTable from 'react-data-table-component';
 import M from 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css';
 import WebFont from 'webfontloader';

@@ -10,6 +10,7 @@ class Sim extends Component {
             response: false,
             data: [],
             max: 100,
+            room: null
         }
     }
 
@@ -37,6 +38,9 @@ class Sim extends Component {
 
         socket.on('join room', data => {
             console.log('join room -> ', data);
+            this.setState({
+                room: data
+            })
             // let prevData = this.state.data;
             // prevData.push('join ' + data);
             // this.setState({
@@ -76,7 +80,7 @@ class Sim extends Component {
             <div style={this.style}>
                 <Tweets data={this.state.data}/>
                 <div style={this.props.scrubStyle}>
-                    <Slider max={this.state.max} value={this.state.data.length} socket={this.props.socket}/>
+                    <Slider max={this.state.max} value={this.state.data.length} socket={this.props.socket} room={this.state.room}/>
                 </div>
             </div>
         )
