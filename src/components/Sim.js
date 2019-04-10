@@ -1,6 +1,9 @@
-import React, {Component} from 'react';
+import React, {
+    Component
+} from 'react';
 import Tweets from '../components/Tweets';
 import Slider from './Slider';
+import M from "materialize-css";
 
 
 class Sim extends Component {
@@ -20,9 +23,8 @@ class Sim extends Component {
 
         socket.on("tweet", data => {
             this.setState({
-                    response: true,
-                }
-            );
+                response: true,
+            });
             console.log(data);
             let prevData = this.state.data;
             prevData.push(data);
@@ -52,12 +54,31 @@ class Sim extends Component {
             this.setState({
                 max: data,
             })
+        });
+
+        socket.on('session ended', data => {
+            toast('Simulation session has ended');
+            setTimeout(function () {
+                toast('You will receive no more tweets')
+            }, 4000);
+            setTimeout(function () {
+                toast('Please consider creating a session of your own')
+            }, 7500);
+
+            function toast(text) {
+                M.toast({
+                    html: text,
+                    classes: 'red darken-1 rounded'
+                });
+            }
         })
     }
 
 
     joinRoom = () => {
-        const {socket} = this.props;
+        const {
+            socket
+        } = this.props;
         socket.emit('join room', 'default room');
     };
 
@@ -74,20 +95,38 @@ class Sim extends Component {
     };
 
     render() {
-        const res =  this.state.response;
-        
-        return (
-            <div style={this.style}>
-                <Tweets data={this.state.data}/>
-                <div style={this.props.scrubStyle}>
-                    <Slider max={this.state.max} value={this.state.data.length} socket={this.props.socket} room={this.state.room}/>
-                </div>
-            </div>
+        const res = this.state.response;
+
+        return ( <
+            div style = {
+                this.style
+            } >
+            <
+            Tweets data = {
+                this.state.data
+            }
+            /> <
+            div style = {
+                this.props.scrubStyle
+            } >
+            <
+            Slider max = {
+                this.state.max
+            }
+            value = {
+                this.state.data.length
+            }
+            socket = {
+                this.props.socket
+            }
+            room = {
+                this.state.room
+            }
+            /> < /
+            div > <
+            /div>
         )
     }
 }
 
 export default Sim;
-
-
-
