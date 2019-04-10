@@ -9,8 +9,8 @@ class Slider extends React.Component {
     
     componentDidMount() {
         //makes the hovering thing
-        var elems  = document.querySelectorAll("input[type=range]"); 
-        M.Range.init(elems);
+        //var elems  = document.querySelectorAll("input[type=range]"); 
+        //M.Range.init(elems);
     }
     
     handleChange = (event, value) => {
