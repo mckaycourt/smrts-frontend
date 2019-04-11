@@ -45,7 +45,11 @@ class ActiveSimulations extends Component {
             console.log('joining room', data);
             M.toast({html: 'Room joined: '+ data, classes: 'green darken-2 rounded'})
         });
-
+        var elems = document.querySelectorAll('.modal');
+        var instances = M.Modal.init(elems);
+        this.setState({
+            instances
+        })
         this.setState({
             socket
         })
@@ -53,7 +57,10 @@ class ActiveSimulations extends Component {
 
     rowClick = (properties) => {
         console.log(properties);
-        this.requestJoinRoom(properties.name)
+        var modal2 = document.querySelector('#modal2');
+        var instance = M.Modal.getInstance(modal2);
+        instance.close();
+        this.requestJoinRoom(properties.name);
         this.props.changeView();
     }
 
@@ -99,20 +106,5 @@ class ActiveSimulations extends Component {
 
 
 export default ActiveSimulations;
-
-/*
-                    <ul className="collection">
-                     <li className="collection-item avatar">
-                        <i className="material-icons circle">assignment_ind</i>
-                        <span className="title">Simulation Name</span>
-                        <p>Meta Data</p>
-                      </li>
-                      <li className="collection-item avatar">
-                        <i className="material-icons circle">folder</i>
-                        <span className="title">Simulation Name</span>
-                        <p>Meta Data</p>
-                      </li>
-                    </ul>
-*/
 
 
