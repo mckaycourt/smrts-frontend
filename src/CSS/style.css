@@ -99,6 +99,7 @@ body {
 
 .icon {
 	padding-right: 25px;
+	vertical-align: bottom;
 }
 
 .hashTags {

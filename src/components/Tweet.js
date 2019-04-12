@@ -6,19 +6,25 @@ const Tweet = props => (
     <div className="tweetEntry">
         <div className="tweetEntry-content">
             <div className="tweetEntry-account-group">
-                <img alt='img' className="tweetEntry-avatar" src={props.avatar || 'https://pbs.twimg.com/profile_images/789948995183316993/POwGu01F_bigger.jpg'}/>
+                <img alt='img' className="tweetEntry-avatar" style={{borderRadius: '50%'}} src={props.avatar || 'https://pbs.twimg.com/profile_images/789948995183316993/POwGu01F_bigger.jpg'}/>
                 <strong className="tweetEntry-fullname">
                     {props.screenName}
                 </strong>
+                {
+                    props.verified &&
+                    <i className="material-icons icon" style={{color: 'blue', fontSize: 'small', paddingLeft: '5px', paddingRight: '1px'}}>check_circle</i>
+
+                }
                 <span className="tweetEntry-username"> @<b>{props.username}</b></span>
-                <span className="tweetEntry-timestamp"> - {props.createdAt}</span>
-                <span className="tweetEntry-timestamp">- {props.createdAt}</span>
+                <span className="tweetEntry-timestamp"> - {new Date(props.createdAt).toDateString()}</span>
+
             </div>
             <div className="tweetEntry-text-container">
                 {props.body}
                 <div className='hashTags'>
                     {
                         props.hashTags.map((hashTag, i) => (
+                            hashTag !== '' &&
                             <span key={i}>#{hashTag.text} </span>
                         ))
                     }
