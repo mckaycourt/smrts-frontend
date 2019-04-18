@@ -7,8 +7,6 @@ import WebFont from 'webfontloader';
 import '../CSS/UploadModal.css';
 import FloatingModalButton from './FloatingModalButton';
 import Modal1 from './Modal1';
-// import Modal2 from './Modal2';
-// import UploaderProgressBar from './UploaderProgressBar';
 
 class UploadModal extends Component {
     constructor(props) {

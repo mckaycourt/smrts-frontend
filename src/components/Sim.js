@@ -97,34 +97,17 @@ class Sim extends Component {
     render() {
         const res = this.state.response;
 
-        return ( <
-            div style = {
-                this.style
-            } >
-            <
-            Tweets data = {
-                this.state.data
-            }
-            /> <
-            div style = {
-                this.props.scrubStyle
-            } >
-            <
-            Slider max = {
-                this.state.max
-            }
-            value = {
-                this.state.data.length
-            }
-            socket = {
-                this.props.socket
-            }
-            room = {
-                this.state.room
-            }
-            /> < /
-            div > <
-            /div>
+        return (
+            <div style={this.style}>
+                <Tweets data={this.state.data}/>
+                <div style={this.props.scrubStyle}>
+                    <Slider max={this.state.max}
+                            value={this.state.data.length}
+                            socket={this.props.socket}
+                            room={this.state.room}
+                    />
+                </div>
+            </div>
         )
     }
 }
